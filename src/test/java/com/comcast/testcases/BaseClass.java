@@ -14,6 +14,6 @@ public class BaseClass {
     @BeforeClass
     public void setup() throws IOException {
         RestAssured.baseURI = BASE_URI;
-        propReader = new PropReader("config.properties");
+        propReader = new PropReader("src/test/resources/config.properties");
     }
 }

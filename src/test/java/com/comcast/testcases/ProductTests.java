@@ -1,8 +1,13 @@
 package com.comcast.testcases;
 
+import com.comcast.helpers.Helpers;
+import com.comcast.pojo.Product;
 import com.comcast.routes.Routes;
 import io.restassured.http.ContentType;
+import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
@@ -55,4 +60,41 @@ public class ProductTests extends BaseClass{
                 .log().all()
         ;
     }
+
+
+    @Test(testName = "Test to verify sorting(ASC)")
+    public void testGetProductsIsSortedAccordingToID() {
+        List<Product> products = given()
+//                .queryParam("sort", "asc")
+        .when()
+                .get(Routes.GET_PRODUCT_SORTED)
+        .then()
+                .statusCode(200)
+                .contentType(ContentType.JSON)
+                .log().all()
+                .extract()
+                .jsonPath()
+                .getList(".", Product.class)
+                ;
+
+        Assert.assertTrue(Helpers.isSorted(products, Product::getId, true));
+
+    }
+
+    @Test(testName = "Test to verify sorting(DESC)")
+    public void testGetProductsIsSortedAccordingToIDDesc() {
+        List<Product> products = given()
+                .queryParam("sort", "desc")
+                .when()
+                .get(Routes.GET_PRODUCT_SORTED)
+                .then()
+                .statusCode(200)
+                .contentType(ContentType.JSON)
+                .extract()
+                .jsonPath()
+                .getList(".", Product.class);
+
+        Assert.assertTrue(Helpers.isSorted(products, Product::getId, false));
+    }
+
 }

@@ -109,8 +109,6 @@ public class ProductTests extends BaseClass{
                 .statusCode(200)
                 .contentType(ContentType.JSON)
                 .body("size()", greaterThan(0))
-//                .body(contains("catego"))
-                .log().all()
         ;
     }
 
@@ -142,7 +140,6 @@ public class ProductTests extends BaseClass{
                 .body(product)
         .when().post(Routes.CREATE_PRODUCT)
         .then()
-                .log().all()
                 .statusCode(201)
                 .body("id", notNullValue())
                 .body("category", equalTo(product.getCategory()))
@@ -150,6 +147,22 @@ public class ProductTests extends BaseClass{
                 .extract().jsonPath().getInt("id");
 
         System.out.println(id);
+    }
+
+    @Test(testName = "Update product Test")
+    public void testUpdateProduct() {
+        String prodId = propReader.get("productId");
+        Product updatedPayload = Payload.getProductPayload();
+
+        given()
+                .contentType(ContentType.JSON)
+                .pathParams("id", prodId)
+                .body(updatedPayload)
+        .when().put(Routes.UPDATE_PRODUCT)
+        .then()
+                .statusCode(200)
+                .contentType(ContentType.JSON)
+        ;
     }
 
 }

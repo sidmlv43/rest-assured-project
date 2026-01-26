@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite parallel="methods" thread-count="10" name="All Test Suite">
+    <listeners>
+        <listener class-name="com.comcast.utils.ExtentReportManager" />
+    </listeners>
+    <test verbose="2" preserve-order="true"
+          name="/home/mach23/IdeaProjects/rest-assured-project/src/test/java/com/comcast/testcases/ProductDataDrivenTest.java">
+        <classes>
+            <class name="com.comcast.testcases.ProductDataDrivenTest">
+                <methods>
+                    <include name="testAddNewProduct"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test verbose="2" preserve-order="true"
+          name="/home/mach23/IdeaProjects/rest-assured-project/src/test/java/com/comcast/testcases/ProductTests.java">
+        <classes>
+            <class name="com.comcast.testcases.ProductTests">
+                <methods>
+                    <include name="testGetAllProducts"/>
+                    <include name="testGetProductById"/>
+                    <include name="testGetProductWithLimit"/>
+                    <include name="testGetProductsIsSortedAccordingToID"/>
+                    <include name="testGetProductsIsSortedAccordingToIDDesc"/>
+                    <include name="testGetAllCategories"/>
+                    <include name="testGetProductByCategory"/>
+                    <include name="testCreateProduct"/>
+                    <include name="testUpdateProduct"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

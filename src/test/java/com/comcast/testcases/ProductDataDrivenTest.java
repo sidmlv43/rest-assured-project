@@ -15,7 +15,7 @@ public class ProductDataDrivenTest extends BaseClass{
 
 
     @Test(
-            testName = "Test Adding new product utilizing dataProviders",
+            testName = "Test Adding and Deleting product utilizing dataProviders",
             dataProvider = "jsonDataProvider",
             dataProviderClass = com.comcast.utils.DataProviders.class
     )
@@ -34,17 +34,30 @@ public class ProductDataDrivenTest extends BaseClass{
                                                                 .build();
 
 
-        given()
+        int id = given()
                 .contentType(ContentType.JSON)
                 .body(prod)
 
         .when()
                 .post(Routes.CREATE_PRODUCT)
         .then()
-                .log().all()
+                .log().body()
                 .statusCode(201)
                 .body("id", notNullValue())
                 .body("title", equalTo(prod.getTitle()))
+                .extract().jsonPath().get("id");
+        ;
+
+
+        given()
+                .pathParams("id", id)
+                .contentType(ContentType.JSON)
+        .when()
+                .delete(Routes.DELETE_PRODUCT)
+        .then()
+                .statusCode(200)
+                .contentType(ContentType.JSON)
+                .log().body()
         ;
     }
 

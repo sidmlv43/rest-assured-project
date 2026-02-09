@@ -1,6 +1,6 @@
 package com.comcast.testcases;
 
-import com.comcast.pojo.Product;
+import com.comcast.pojo.product.Product;
 import com.comcast.routes.Routes;
 import io.restassured.http.ContentType;
 import org.testng.annotations.Test;

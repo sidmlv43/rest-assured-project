@@ -1,4 +1,4 @@
-package com.comcast.pojo;
+package com.comcast.pojo.product;
 
 import lombok.*;
 

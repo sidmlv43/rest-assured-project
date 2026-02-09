@@ -19,6 +19,8 @@ public class BaseClass {
     RequestLoggingFilter requestLoggingFilter;
     ResponseLoggingFilter responseLoggingFilter;
 
+    private static PrintStream logStream;
+
     protected PropReader propReader;
     @BeforeClass
     public void setup() throws IOException {
@@ -27,13 +29,18 @@ public class BaseClass {
 
         // Setup filters for logging
 
-        FileOutputStream fos = new FileOutputStream("./logs/test_logging.txt");
-        PrintStream log = new PrintStream(fos, true);
+        if (logStream == null) {
+            // "true" for auto-flush ensures data is written immediately
+            FileOutputStream fos = new FileOutputStream("./logs/test_logging.txt", true);
+            logStream = new PrintStream(fos, true);
+        }
 
-        requestLoggingFilter = new RequestLoggingFilter(log);
-        responseLoggingFilter = new ResponseLoggingFilter(log);
 
-        RestAssured.filters(requestLoggingFilter, responseLoggingFilter);
+        RestAssured.filters(
+                new RequestLoggingFilter(logStream),
+                new ResponseLoggingFilter(logStream)
+        );
+
 
         RestAssured.config =
                 RestAssured.config()

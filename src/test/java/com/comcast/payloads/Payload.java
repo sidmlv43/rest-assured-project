@@ -1,6 +1,10 @@
 package com.comcast.payloads;
 
-import com.comcast.pojo.Product;
+import com.comcast.pojo.product.Product;
+import com.comcast.pojo.user.Address;
+import com.comcast.pojo.user.Geolocation;
+import com.comcast.pojo.user.Name;
+import com.comcast.pojo.user.User;
 import com.github.javafaker.Faker;
 
 import java.util.Random;
@@ -31,6 +35,33 @@ public class Payload {
     // Cart
 
     // User
+
+    public static User getUserPayLoad() {
+        return User.builder()
+                .name(
+                        Name.builder()
+                                .firstname(faker.address().firstName())
+                                .lastname(faker.address().lastName())
+                                .build()
+                )
+                .address(
+                        Address.builder()
+                                .city(faker.address().city())
+                                .number(faker.number().numberBetween(10001, 99999))
+                                .street(faker.address().streetAddress())
+                                .zipcode(faker.address().zipCode())
+                                .build()
+                )
+                .email(faker.internet().emailAddress())
+                .phone(faker.phoneNumber().toString())
+                .password(faker.internet().password())
+                .geolocation(
+                        Geolocation.builder()
+                                .lat(faker.address().latitude())
+                                .lon(faker.address().longitude())
+                                .build()
+                ).build();
+    }
 
     // Login
 

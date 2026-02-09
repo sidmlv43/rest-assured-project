@@ -2,7 +2,7 @@ package com.comcast.testcases;
 
 import com.comcast.helpers.Helpers;
 import com.comcast.payloads.Payload;
-import com.comcast.pojo.Product;
+import com.comcast.pojo.product.Product;
 import com.comcast.routes.Routes;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
